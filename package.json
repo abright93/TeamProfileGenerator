@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/abright93/TeamProfileGenerator/issues"
   },
-  "homepage": "https://github.com/abright93/TeamProfileGenerator#readme"
+  "homepage": "https://github.com/abright93/TeamProfileGenerator#readme",
+  "dependencies": {
+    "jest": "^27.0.6"
+  }
 }
