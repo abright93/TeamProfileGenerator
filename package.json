@@ -1,0 +1,22 @@
+{
+  "name": "teamprofilegenerator",
+  "version": "1.0.0",
+  "description": "develops team profile",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abright93/TeamProfileGenerator.git"
+  },
+  "author": "Alexandra Bright",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abright93/TeamProfileGenerator/issues"
+  },
+  "homepage": "https://github.com/abright93/TeamProfileGenerator#readme"
+}
