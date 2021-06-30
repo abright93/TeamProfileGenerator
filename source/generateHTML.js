@@ -17,7 +17,7 @@ const generateManager = function (manager) {
     `;
 }
 
-//Engineer card
+// create Engineer card
 const generateEngineer = function (engineer) {
     return `
     <div class="col-4 mt-4">
@@ -36,7 +36,7 @@ const generateEngineer = function (engineer) {
     `
 }
 
-//Intern card 
+// create Intern card 
 const generateIntern = function (intern) {
     return `
     <div class="col-4 mt-4">
@@ -137,4 +137,4 @@ const generateTeamPage = function (employeeCards) {
 }
 
 // export to index
-module.exports = genHTML; 
+module.exports = generateHTML; 

@@ -1,5 +1,5 @@
 // Link to source
-const genHTML = require('./source/genHTML');
+const generateHTML = require('./source/generateHTML');
 
 // Team profiles
 const Employee = require('./library/employee');
@@ -90,43 +90,26 @@ function Prompt() {
                     {
                         type:'confirm',
                         name:'anotherEntry',
-                        message: "Would you like to add another employee?",
+                        message: "What you like to add another employee?",
                         default: false
                     }])
                     .then(({school, anotherEntry}) => {
                         intern.push(new Intern(employee, id, email, school))
-                        // console.log(employeeArray)
+                        // console.log(employeeArr)
                         if (anotherEntry) {
                             return Prompt();
                         }
-                        
                     })
             }
         })
 };
 
-// function to generate HTML page file using file system 
-const writeFile = data => {
-    fs.writeFile('./dist/index.htm./', data, err => {
-        // if there is an error 
-        if (err) {
-            console.log(err);
-            return;
-        // when the profile has been created 
-        } else {
-            console.log("Your team profile has been successfully created! Please check out the index.html")
-        }
-    })
-}; 
 
-addManager()
-  .then(addEmployee)
-  .then(employeeArray => {
-    return generateHTML(employeeArray);
-  })
-  .then(pageHTML => {
-    return writeFile(pageHTML);
-  })
-  .catch(err => {
- console.log(err);
-  });
+
+Prompt()
+    .then(teamData => {
+        return generatePage(employeeArr)
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML)
+    })
