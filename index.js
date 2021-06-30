@@ -1,15 +1,18 @@
-const inquirer = require('inquirer');
+// Link to source
+const genHTML = require('./source/genHTML');
+
+// Team profiles
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const generatePage = require('./src/page-template');
-const writeFile = require('./src/generate-site')
+
+const inquirer = require('inquirer');
 
 let manager = [];
 let engineer = [];
 let intern = [];
-let employeeArr = {manager, engineer, intern};
+let employeeArray = {manager, engineer, intern};
 
 function Prompt() {
     
@@ -52,7 +55,7 @@ function Prompt() {
                     }])
                     .then(({office, anotherEntry}) => {
                         manager.push(new Manager(employee, id, email, office))
-                        
+                        // console.log(employeeArray)
                         if (anotherEntry) {
                             return Prompt();
                         }
@@ -72,7 +75,7 @@ function Prompt() {
                     }])
                     .then(({github, anotherEntry}) => {
                         engineer.push(new Engineer(employee, id, email, github))
-                        
+                        // console.log(employeeArray)
                         if (anotherEntry) {
                             return Prompt();
                         }
@@ -92,7 +95,7 @@ function Prompt() {
                     }])
                     .then(({school, anotherEntry}) => {
                         intern.push(new Intern(employee, id, email, school))
-                        
+                        // console.log(employeeArray)
                         if (anotherEntry) {
                             return Prompt();
                         }
@@ -105,7 +108,7 @@ function Prompt() {
 
 Prompt()
     .then(teamData => {
-        return generatePage(employeeArr)
+        return generatePage(employeeArray)
     })
     .then(pageHTML => {
         return writeFile(pageHTML)
