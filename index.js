@@ -2,10 +2,10 @@
 const genHTML = require('./source/genHTML');
 
 // Team profiles
-const Employee = require('./lib/Employee');
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
+const Employee = require('./library/employee');
+const Manager = require('./library/manager');
+const Engineer = require('./library/engineer');
+const Intern = require('./library/intern');
 
 const inquirer = require('inquirer');
 
