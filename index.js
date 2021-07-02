@@ -16,7 +16,7 @@ const render = require("./library/renderedHTML");
 let team = [];
 let canAddManager = true;
 
-// Write code to use inquirer to gather information about the development team members, and to create objects for each team member (using the correct classes as blueprints!)
+
 const questions = {
     Manager: [
         {
@@ -26,17 +26,17 @@ const questions = {
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter manager's name." }
+                } else { return "Please enter manager's name!" }
             },
         },
         {
             type: "input",
             name: "id",
-            message: "What is the manager's id?",
+            message: "What is the manager's ID number?",
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter manager's id." }
+                } else { return "Please enter manager's ID number!" }
             },
         },
         {
@@ -46,7 +46,7 @@ const questions = {
             validate: (value) => {
                 if (emailValidator.validate(value)) {
                     return true
-                } else { return 'Please enter a valid email address.' }
+                } else { return 'Please enter a valid email address!' }
             },
         },
         {
@@ -56,13 +56,13 @@ const questions = {
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter manager's office number." }
+                } else { return "Please enter manager's office number!" }
             },
         },
         {
             type: "list",
             name: "addNew",
-            message: "Do you want to add another employee",
+            message: "Do you want to add another employee?",
             choices: ["yes", "no"]
         }
     ],
@@ -75,17 +75,17 @@ const questions = {
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter engineer's name." }
+                } else { return "Please enter engineer's name!" }
             },
         },
         {
             type: "input",
             name: "id",
-            message: "What is the engineer's id?",
+            message: "What is the engineer's ID number?",
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter engineer's id." }
+                } else { return "Please enter engineer's ID!" }
             },
         },
         {
@@ -95,7 +95,7 @@ const questions = {
             validate: (value) => {
                 if (emailValidator.validate(value)) {
                     return true
-                } else { return 'Please enter a valid email address.' }
+                } else { return 'Please enter a valid email address!' }
             },
         },
         {
@@ -105,13 +105,13 @@ const questions = {
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter engineer's GitHub." }
+                } else { return "Please enter engineer's GitHub username!" }
             },
         },
         {
             type: "list",
             name: "addNew",
-            message: "Do you want to add another employee",
+            message: "Do you want to add another employee?",
             choices: ["yes", "no"]
         }
     ],
@@ -124,17 +124,17 @@ const questions = {
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter intern's name." }
+                } else { return "Please enter intern's name!" }
             },
         },
         {
             type: "input",
             name: "id",
-            message: "What is the intern's id?",
+            message: "What is the intern's ID number?",
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter intern's id." }
+                } else { return "Please enter intern's ID!" }
             },
         },
         {
@@ -144,7 +144,7 @@ const questions = {
             validate: (value) => {
                 if (emailValidator.validate(value)) {
                     return true
-                } else { return 'Please enter a valid email address.' }
+                } else { return 'Please enter a valid email address!' }
             },
         },
         {
@@ -154,7 +154,7 @@ const questions = {
             validate: (value) => {
                 if (value) {
                     return true
-                } else { return "Please enter the name of school." }
+                } else { return "Please enter the name of school!" }
             },
         },
         {
@@ -178,13 +178,13 @@ const selectMemberType = [
 function addNewMember() {
     inquirer.prompt(selectMemberType)
         .then(answer => {
-            // console.log(answer.memberType);
+            
 
             if (answer.memberType === "Manager") {
                 if (canAddManager) {
                     inquirer.prompt(questions.Manager)
                         .then(answer => {
-                            //save employee info
+                            
                             const manager = new Manager
                                 (
                                     answer.name,
@@ -193,7 +193,7 @@ function addNewMember() {
                                     answer.officeNumber
                                 );
 
-                            //add info to team array if manager doesn't exist
+                            
                             team.push(manager);
                             canAddManager = false;
                             if (answer.addNew === "yes") {
@@ -203,7 +203,7 @@ function addNewMember() {
                             }
                         });
                 } else {
-                    //only 1 manager
+                    
                     console.log("There is a manager already!")
                     addNewMember();
                 }
@@ -212,7 +212,7 @@ function addNewMember() {
             } else if (answer.memberType === "Engineer") {
                 inquirer.prompt(questions.Engineer)
                     .then(answer => {
-                        //save ee info
+                        
                         const engineer = new Engineer
                             (
                                 answer.name,
@@ -220,7 +220,7 @@ function addNewMember() {
                                 answer.email,
                                 answer.github
                             );
-                        //add info to team array
+                        
                         team.push(engineer);
                         if (answer.addNew === "yes") {
                             addNewMember();
@@ -232,7 +232,7 @@ function addNewMember() {
             } else if (answer.memberType === "Intern") {
                 inquirer.prompt(questions.Intern)
                     .then(answer => {
-                        //save ee info
+                        
                         const intern = new Intern
                             (
                                 answer.name,
@@ -240,7 +240,7 @@ function addNewMember() {
                                 answer.email,
                                 answer.school
                             );
-                        //add info to team array
+                        
                         team.push(intern);
                         if (answer.addNew === "yes") {
                             addNewMember();
