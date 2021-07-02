@@ -1,224 +1,166 @@
+const inquirer = require("inquirer");
+const fs = require("fs");
 const Manager = require("./library/manager");
 const Engineer = require("./library/engineer");
 const Intern = require("./library/intern");
-const inquirer = require("inquirer");
-const path = require("path");
-const fs = require("fs");
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-const outputPath = path.join(OUTPUT_DIR, "team.html");
-const generateTeam = require("./source/template")
+const managerCard = require("./source/template").managerCard
+const engineerCard = require("./source/template").engineerCard
+const internCard = require("./source/template").internCard
 
-teamArray = [];
-
-
-
-function runApp () {
-
-  function createTeam () {
-    inquirer.prompt([{
-      type: "list",
-      message: "What type of employee would you like to add to your team?",
-      name: "addEmployeePrompt",
-      choices: ["Manager", "Engineer", "Intern", "No more team members are needed."]
-    }]).then(function (userInput) {
-      switch(userInput.addEmployeePrompt) {
-        case "Manager":
-          addManager();
-          break;
-        case "Engineer":
-          addEngineer();
-          break;
-        case "Intern":
-          addIntern();
-          break;
-
-        default:
-          htmlBuilder();
-      }
-    })
+const roleQuestion = [
+  {
+    type: "list",
+    name: "role",
+    message: "Which type of team member would you like to add?",
+    choices: ["Manager", "Engineer", "Intern"],
   }
+];
 
+const managerQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "What is the managers name?",
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "What is the managers ID?",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is the managers email?",
+  },
+  {
+    type: "input",
+    name: "officeNumber",
+    message: "What is the managers office phone number?",
+  },
+];
 
-function addManager() {
-  inquirer.prompt ([
-    
-    {
-      type: "input",
-      name: "managerName",
-      message: "What is the manager's name?"
-    },
+const engineerQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "What is the engineers name?",
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "What is the engineers ID?",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is the engineers email?",
+  },
+  {
+    type: "input",
+    name: "gitHub",
+    message: "what is the engineers GitHub username?",
+  },
+];
 
-    {
-      type: "input",
-      name: "managerId",
-      message: "What is the manager's ID number?"
-    },
+const internQuestions = [
+  {
+    type: "input",
+    name: "name",
+    message: "What is the interns name?",
+  },
+  {
+    type: "input",
+    name: "id",
+    message: "What is the interns ID?",
+  },
+  {
+    type: "input",
+    name: "email",
+    message: "What is the interns email?",
+  },
+  {
+    type: "input",
+    name: "school",
+    message: "What is the interns school?",
+  },
+];
 
-    {
-      type: "input",
-      name: "managerEmail",
-      message: "What is the manager's email address?"
-    },
+const employeeCards = [];
 
-    {
-      type: "input",
-      name: "managerOfficeNumber",
-      message: "What is the manager's office number?"
+function init() {
+    inquirer.prompt(roleQuestion).then((roleAnswer) => {
+      if (roleAnswer.role === "Manager") {
+        console.log(roleAnswer.role)
+        inquirer.prompt(managerQuestions).then((managerAnswers) => {
+          const htmlManager = new Manager(managerAnswers.name, managerAnswers.id, managerAnswers.email, managerAnswers.officeNumber);
+          employeeCards.push(managerCard(htmlManager));
+          initialAddMore ()
+        });
+       } else if (roleAnswer.role === "Engineer") {
+         console.log(roleAnswer.role)
+         inquirer.prompt(engineerQuestions).then((engineerAnswers) => {
+          const htmlEngineer = new Engineer(engineerAnswers.name, engineerAnswers.id, engineerAnswers.email, engineerAnswers.gitHub);
+          employeeCards.push(engineerCard(htmlEngineer));
+          initialAddMore ()
+        });
+       } else if (roleAnswer.role === "Intern") {
+         console.log(roleAnswer.role)
+         inquirer.prompt(internQuestions).then((internAnswers) => {
+          const htmlIntern = new Intern(internAnswers.name, internAnswers.id, internAnswers.email, internAnswers.school);
+          employeeCards.push(internCard(htmlIntern));
+          initialAddMore ()
+        });
     }
-
-  ]).then(answers => {
-    const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
-    teamArray.push(manager);
-    createTeam();
-  });
-
+});  
 }
+init();
+
+function initialAddMore () {
+    inquirer.prompt([{
+        type: "confirm",
+        name: "addMore",
+        message: "Would you like to add more team members?",
+        default: true,
+    }])
+    .then((answer) => {
+        if (answer.addMore) {
+            init();
+        }
+        else {
+            buildHtml();
+        }
+})}
 
 
-function addEngineer() {
-    inquirer.prompt([
-      
-      {
-        type: "input",
-        name: "engineerName",
-        message: "What is the engineer's name?"
-      },
 
-      {
-        type: "input",
-        name: "engineerId",
-        message: "What is the engineer's ID number?" 
-      },
-
-      {
-        type: "input",
-        name: "engineerEmail",
-        message: "What is the engineer's email address?"
-      },
-
-      {
-        type: "input",
-        name: "engineerGithub",
-        message: "What is the engineer's GitHub username?"
-      }
-
-    ]).then(answers => {
-      const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
-      teamArray.push(engineer);
-      createTeam();
-    });
-
-  }
-
-  function addIntern() {
-    inquirer.prompt([
-      
-      {
-        type: "input",
-        name: "internName",
-        message: "What is the intern's name?"
-      },
-
-      {
-        type: "input",
-        name: "internId",
-        message: "What is the intern's ID number?" 
-      },
-
-      {
-        type: "input",
-        name: "internEmail",
-        message: "What is the intern's email address?"
-      },
-
-      {
-        type: "input",
-        name: "internSchool",
-        message: "What school does the intern attend?"
-      }
-
-    ]).then(answers => {
-      const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
-      teamArray.push(intern);
-      createTeam();
-    });
-
-  }
-
-
-function htmlBuilder () {
-    console.log("Team created!")
-
-    fs.writeFileSync(outputPath, generateTeam(teamArray), "UTF-8")
-
+const buildHtml = () => {
+    const html = `    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Team</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    </head>
+    <body>
+        <header class = "myTeam">
+            <div class = "container text-center bg-gradient bg-danger text-white">
+                <h1>My Team</h1>
+            </div>
+        </header>
+        <div class=container>
+        ${employeeCards.map(card => (`
+          <div class="row">
+            ${card}
+          </div>
+        `))}
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+    </html>`
+    fs.writeFileSync('./distribution/index.html', html, (err) => err ? console.log(err) : '')
 }
-
-createTeam();
-
-}
-
-runApp();
-
-const templatesDir = path.resolve(__dirname, "./library");
-
-const render = employees => {
-  const html = [];
-
-  html.push(...employees
-    .filter(employee => employee.getRole() === "Manager")
-    .map(manager => renderManager(manager))
-  );
-  html.push(...employees
-    .filter(employee => employee.getRole() === "Engineer")
-    .map(engineer => renderEngineer(engineer))
-  );
-  html.push(...employees
-    .filter(employee => employee.getRole() === "Intern")
-    .map(intern => renderIntern(intern))
-  );
-
-  return renderMain(html.join(""));
-
-};
-
-const renderManager = manager => {
-  let template = fs.readFileSync(path.resolve(templatesDir, "./source/template.js"), "utf8");
-  template = replacePlaceholders(template, "name", manager.getName());
-  template = replacePlaceholders(template, "role", manager.getRole());
-  template = replacePlaceholders(template, "email", manager.getEmail());
-  template = replacePlaceholders(template, "id", manager.getId());
-  template = replacePlaceholders(template, "officeNumber", manager.getOfficeNumber());
-  return template;
-};
-
-const renderEngineer = engineer => {
-  let template = fs.readFileSync(path.resolve(templatesDir, "./source/template.js"), "utf8");
-  template = replacePlaceholders(template, "name", engineer.getName());
-  template = replacePlaceholders(template, "role", engineer.getRole());
-  template = replacePlaceholders(template, "email", engineer.getEmail());
-  template = replacePlaceholders(template, "id", engineer.getId());
-  template = replacePlaceholders(template, "github", engineer.getGithub());
-  return template;
-};
-
-const renderIntern = intern => {
-  let template = fs.readFileSync(path.resolve(templatesDir, "./source/template.js"), "utf8");
-  template = replacePlaceholders(template, "name", intern.getName());
-  template = replacePlaceholders(template, "role", intern.getRole());
-  template = replacePlaceholders(template, "email", intern.getEmail());
-  template = replacePlaceholders(template, "id", intern.getId());
-  template = replacePlaceholders(template, "school", intern.getSchool());
-  return template;
-};
-
-const renderMain = html => {
-  const template = fs.readFileSync(path.resolve(templatesDir, "./distribution/index.html"), "utf8");
-  return replacePlaceholders(template, "team", html);
-};
-
-const replacePlaceholders = (template, placeholder, value) => {
-  const pattern = new RegExp("{{ " + placeholder + " }}", "gm");
-  return template.replace(pattern, value);
-};
-
-module.exports = render;
