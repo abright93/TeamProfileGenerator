@@ -2,7 +2,7 @@
 const managerCard = (Manager) => {
     const {name, id, email, number, role} = Manager
     return `<section class = "column">
-        <div class = "card">
+        <section class = "card">
             <div class = "cardContent">
                 <div class="cardHeader">
                     <div class = "cardHeaderContent text-center bg-gradient bg-dark text-white">
@@ -16,7 +16,7 @@ const managerCard = (Manager) => {
                     <div class = "column"> Office Number: ${number} </div>
                 </div>
             </div>
-        </div>
+        </section>
     </section>`  
 }
 
@@ -25,7 +25,7 @@ const managerCard = (Manager) => {
 const internCard = (Intern) => {
     const {name, id, email, school, role} = Intern
     return `<section class = "column">
-        <div class = "card">
+        <section class = "card">
             <div class = "cardContent">
                 <div class = "cardHeader">
                     <div class = "cardHeaderContent text-center bg-gradient bg-secondary text-white">
@@ -39,7 +39,7 @@ const internCard = (Intern) => {
                     <div class = "column"> School: ${school}</div>
                 </div>
             </div>
-        </div>
+        </section>
     </section>` 
 }
 
@@ -47,7 +47,7 @@ const internCard = (Intern) => {
 const engineerCard = (Engineer) => {
     const {name, id, email, gitHub, role} = Engineer
     return `<section class = "column">
-        <div class = "card">
+        <section class = "card">
             <div class = "cardContent">
                 <div class = "cardHeader">
                     <div class = "cardHeaderContent text-center bg-gradient bg-secondary text-white">
@@ -61,7 +61,7 @@ const engineerCard = (Engineer) => {
                     <div class = "column"> GitHub Userame: <a href="https://github.com/${gitHub}" target="_blank">${gitHub}</a></div>
                 </div>
             </div>
-        </div>
+        </section>
     </section>`  
 }
 
