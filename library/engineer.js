@@ -1,26 +1,19 @@
-// Inports Employee constructor 
 const Employee = require("./employee");
 
-// engineer constructor extends employee constructor 
 class Engineer extends Employee {
-    constructor (name, id, email, github) {
-        
-        // calling employee constructor 
+    constructor (name ,id ,email, gitHub) {
         super (name, id, email);
-
-        this.github = github; 
+        this.gitHub = gitHub;
+        this.role = this.getRole();
     }
 
-    // Returns github from input 
-    getGithub () {
-        return this.github;
+    getGitHub () {
+        return this.gitHub;
     }
 
-     // override employee role to engineer
     getRole () {
         return "Engineer";
     }
 }
 
-// to be exported 
-module.exports = Engineer; 
+module.exports = Engineer;
