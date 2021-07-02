@@ -56,7 +56,7 @@ const generateIntern = intern => {
             <li class="list-group-item">School: ${intern.getSchool()}</li>
         </ul>
     </div>
-</section>
+</section
         `;
     };
 

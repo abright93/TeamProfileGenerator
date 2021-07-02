@@ -1,20 +1,17 @@
 const Intern = require("../library/intern");
 
-test ('creates an intern object', () => {
-  const intern = new Intern('', '', '', '');
-  expect(intern.name).toBe('');
-  expect(intern.id).toBe('');
-  expect(intern.email).toBe('');
-  expect(intern.school).toBe('');
-});
-
-test("gets intern's school", () => {
-  const intern = new Intern('', '', '', '');
-  expect(intern.getSchool()).toEqual(expect.stringContaining(''));
-});
-
-test("gets intern's role", () => {
-  const intern = new Intern('', '', '', '');
-
-  expect(intern.getRole()).toEqual(expect.stringContaining(''));
+describe("intern", () => {
+  const intern = new Intern('Alex', '12345', 'test@email.com', 'UPenn');
+  it("getName = name", () => {
+    expect(intern.getName()).toEqual('Alex');
+  })
+  it("getID = id", () => {
+    expect(intern.getId()).toEqual('12345');
+  })
+  it("getEmail = email", () => {
+    expect(intern.getEmail()).toEqual('test@email.com');
+  })
+  it("getSchool = school", () => {
+    expect(intern.getSchool()).toEqual('UPenn');
+  })    
 });

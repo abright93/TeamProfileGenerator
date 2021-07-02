@@ -1,22 +1,17 @@
 const Engineer = require("../library/engineer");
 
-test('creates an engineer object', () => {
-  const engineer = new Engineer ('', '', '', '')
-  
-  expect(engineer.name).toBe('');
-  expect(engineer.id).toBe('');
-  expect(engineer.email).toBe('');
-  expect(engineer.github).toBe('');
-});
-
-test ("gets engineer's github username", () => {
-  const engineer = new Engineer ('', '', '', '')
-
-  expect(engineer.getGithub()).toEqual(expect.stringContaining(''));
-});
-
-test("gets engineer's role", () => {
-  const engineer = new Engineer ('', '', '', '')
-
-  expect(engineer.getRole()).toEqual(expect.stringContaining(''));
+describe("engineer", () => {
+  const engineer = new Engineer('Alex', '12345', 'test@email.com', 'test123');
+  it("getName = name", () => {
+    expect(engineer.getName()).toEqual('Alex');
+  })
+  it("getID = id", () => {
+    expect(engineer.getId()).toEqual('12345');
+  })
+  it("getEmail = email", () => {
+    expect(engineer.getEmail()).toEqual('test@email.com');
+  })
+  it("getGitHub = gitHub", () => {
+    expect(engineer.getGitHub()).toEqual('test123');
+  })    
 });
