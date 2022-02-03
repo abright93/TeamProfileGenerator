@@ -1,7 +1,7 @@
 # TeamProfileGenerator
 
 # Description
-When prompted, a user will be asked a series of questions about their employees (manager, engineer, and intern). Their answers will generate into a profile that categorizes each employee's role and thei contact information.
+When prompted, a user will be asked a series of questions about their employees (manager, engineer, and intern). Their answers will generate into a profile that categorizes each employee's role and their contact information.
 # Table of Contents
 * [Installation](#installation)
 * [Usage](#usage)
